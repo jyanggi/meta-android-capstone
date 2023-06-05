@@ -102,7 +102,11 @@ fun Profile(navController: NavHostController?) {
                         sharedPref.edit()
                             .clear()
                             .commit()
-                        navController?.navigate(Onboarding.route)
+                        navController?.navigate(Onboarding.route){
+                            popUpTo(Onboarding.route){
+                                inclusive = true
+                            }
+                        }
                 }
             ) {
                 Text(

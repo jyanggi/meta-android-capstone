@@ -145,7 +145,11 @@ fun Onboarding(navController: NavHostController?) {
                                 .putString(MainActivity.EMAIL, email)
                                 .putBoolean(MainActivity.IS_LOGGED_IN, true)
                                 .commit()
-                            navController?.navigate(Home.route)
+                            navController?.navigate(Home.route){
+                                popUpTo(Profile.route){
+                                    inclusive = true
+                                }
+                            }
                         }
                     }
                 ) {
@@ -158,7 +162,7 @@ fun Onboarding(navController: NavHostController?) {
                 }
 
 
-        }
+            }
 
     }
 

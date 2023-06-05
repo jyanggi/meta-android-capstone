@@ -1,23 +1,25 @@
 package com.johnguaz.metaandroidcapstone
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.MutableLiveData
+import androidx.activity.compose.BackHandler
+import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun Navigation(isLoggedInLiveData: MutableLiveData<Boolean>) {
+fun Navigation(isLogggedIn: Boolean = false) {
     val navController = rememberNavController()
-    val isLoggedIn = isLoggedInLiveData.observeAsState(false)
-    NavHost(navController = navController, startDestination = (if(isLoggedIn.value)  Home.route else  Onboarding.route)) {
+    NavHost(navController = navController, startDestination =(if(isLogggedIn)  Home.route else  Onboarding.route) ) {
+
         composable(Onboarding.route) {
             Onboarding(navController)
         }
         composable(Home.route) {
             Home(navController)
+            BackHandler(true) {
+                //prevent back
+            }
         }
         composable(Profile.route) {
             Profile(navController)

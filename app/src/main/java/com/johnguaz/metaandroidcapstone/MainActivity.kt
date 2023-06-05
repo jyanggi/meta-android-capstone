@@ -3,6 +3,10 @@ package com.johnguaz.metaandroidcapstone
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
@@ -29,7 +33,6 @@ class MainActivity : ComponentActivity() {
     private val database by lazy {
         Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database").build()
     }
-
     private suspend fun fetchMenu(): List<MenuItemNetwork> {
         val url = "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json"
         val menuItemList:  MenuNetwork = httpClient.get(url).body()
@@ -44,10 +47,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isLoggedInLiveData.value= sharedPreferences.getBoolean(IS_LOGGED_IN, false)
-
         setContent {
             LittleLemonTheme {
-                Navigation(isLoggedInLiveData)
+                var isLoggedIn: Boolean by remember { mutableStateOf(false) }
+                isLoggedIn = isLoggedInLiveData.value!!
+                Navigation(isLoggedIn)
             }
         }
         lifecycleScope.launch(Dispatchers.IO) {
