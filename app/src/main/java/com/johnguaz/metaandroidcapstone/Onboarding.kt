@@ -32,8 +32,9 @@ fun Onboarding(navController: NavHostController?) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
     modifier= Modifier
         .fillMaxWidth()
+        .fillMaxHeight()
         .background(color = Color.White)){
-        TopAppBar()
+        TopAppBar(navController = navController)
         Row(verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
@@ -123,7 +124,7 @@ fun Onboarding(navController: NavHostController?) {
                     .border(width = 1.dp, color = LittleLemonColor.cloud, shape = Shapes.medium),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    onNext = { focusManager.clearFocus() }
                 )
             )
                     Button(

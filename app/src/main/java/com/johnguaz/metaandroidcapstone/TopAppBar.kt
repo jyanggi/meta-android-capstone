@@ -1,55 +1,44 @@
 package com.johnguaz.metaandroidcapstone
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.IconButton
-import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import androidx.navigation.NavHostController
 
 @Composable
-fun TopAppBar(scaffoldState: ScaffoldState? = null, scope: CoroutineScope? = null) {
+fun TopAppBar(navController: NavHostController?, isHome: Boolean=false) {
     Row(horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth().padding(20.dp),
+        modifier = Modifier.fillMaxWidth().padding(10.dp),
         verticalAlignment = Alignment.CenterVertically) {
-/*        IconButton(onClick = {
-            scope?.launch { scaffoldState?.drawerState?.open() }
-        }) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_hamburger_menu),
-                contentDescription = "Menu Icon",
-                modifier = Modifier.size(24.dp)
-            )
-        }*/
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Little Lemon Logo",
-            modifier = Modifier.fillMaxWidth()
-                .size(40.dp)
+            modifier = Modifier.fillMaxWidth(.7f)
+                .size(50.dp)
                 .padding(horizontal = 10.dp)
         )
- /*       IconButton(onClick = { }) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_cart),
-                contentDescription = "Cart",
-                modifier = Modifier.size(24.dp)
-            )
-        }*/
+
+        if(isHome){
+            IconButton(onClick = {navController?.navigate(Profile.route) }, modifier = Modifier.fillMaxWidth(.3f).size(80.dp) ) {
+                Image(
+                    painter = painterResource(id = R.drawable.profile),
+                    contentDescription = "Profile",
+                    modifier = Modifier.fillMaxWidth()
+
+                )
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TopAppBarPreview() {
-    TopAppBar()
+    TopAppBar(null, isHome = true)
 }

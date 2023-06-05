@@ -31,8 +31,9 @@ fun Profile(navController: NavHostController?) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier= Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .background(color = Color.White)){
-        TopAppBar()
+        TopAppBar(navController=navController)
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(15.dp),
