@@ -3,41 +3,28 @@ package com.johnguaz.metaandroidcapstone
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.johnguaz.metaandroidcapstone.ui.theme.MetaAndroidCapstoneTheme
+import androidx.lifecycle.MutableLiveData
+import com.johnguaz.metaandroidcapstone.ui.theme.LittleLemonTheme
 
 class MainActivity : ComponentActivity() {
+    private val sharedPreferences by lazy {this.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)}
+    private val isLoggedInLiveData = MutableLiveData<Boolean>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        isLoggedInLiveData.value= sharedPreferences.getBoolean(IS_LOGGED_IN, false)
         super.onCreate(savedInstanceState)
         setContent {
-            MetaAndroidCapstoneTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+            LittleLemonTheme {
+                Navigation(isLoggedInLiveData)
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MetaAndroidCapstoneTheme {
-        Greeting("Android")
+    companion object{
+        const val SHARED_PREF_NAME = "LittleLemonCapstone"
+        const val IS_LOGGED_IN = "isLoggedIn"
+        const val FIRST_NAME = "firstName"
+        const val LAST_NAME = "lastName"
+        const val EMAIL = "email"
     }
 }
